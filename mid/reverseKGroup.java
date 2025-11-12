@@ -12,10 +12,10 @@ public class reverseKGroup {
             this.val = val;
         }
     }
-    public static void reverse(ListNode startPre, ListNode end){
+    public static void reverse(ListNode start, ListNode end){
         ListNode pre = end.next;
         ListNode next = end.next;
-        ListNode cur = startPre.next;
+        ListNode cur = start;
 
         //这里不能直接写cur != end.next 因为他是变化的
         while(cur != next){
@@ -24,7 +24,6 @@ public class reverseKGroup {
             pre = cur;
             cur = tmp;
         }
-        startPre.next = pre;
     }
     public static ListNode reverseKGroup(ListNode head,int k){
         ListNode dummy = new ListNode();
@@ -35,10 +34,11 @@ public class reverseKGroup {
             for(int i = 0;i < k && cur != null;i++){
                 cur = cur.next;
             }
-            ListNode tmp = startPre.next;
+            ListNode start = startPre.next;
             if(cur != null){
-                reverse(startPre,cur);
-                cur = tmp;
+                reverse(start,cur);
+                startPre.next = cur;
+                cur = start;
             }
         }
         return dummy.next;
